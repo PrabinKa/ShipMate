@@ -10,10 +10,19 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-vector-icons/ionicons": "^12.3.0",
+    "@react-native/new-app-screen": "0.84.0",
+    "@react-navigation/bottom-tabs": "^7.13.0",
+    "@react-navigation/elements": "^2.9.5",
+    "@react-navigation/native": "^7.1.28",
+    "@react-navigation/native-stack": "^7.12.0",
+    "@reduxjs/toolkit": "^2.11.2",
     "react": "19.2.3",
     "react-native": "0.84.0",
-    "@react-native/new-app-screen": "0.84.0",
-    "react-native-safe-area-context": "^5.5.2"
+    "react-native-mmkv": "^4.1.2",
+    "react-native-nitro-modules": "^0.33.9",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -37,5 +46,6 @@
   },
   "engines": {
     "node": ">= 22.11.0"
-  }
+  },
+  "packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8"
 }
