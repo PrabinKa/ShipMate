@@ -1,16 +1,19 @@
 import { store } from '../../store/store';
 import { deliveryActions } from '../../store/slice/delivery/delivery';
 import { AppState, AppStateStatus } from 'react-native';
+import BackgroundGeolocation from 'react-native-background-geolocation';
 
 let simulationInterval: ReturnType<typeof setInterval> | null = null;
 let appStateSubscription: any = null;
+let hasNotifiedCompletion = false;
 
 export const startDeliverySimulation = () => {
   const state = store.getState().delivery;
   
   // Start delivery if not already started
-  if (!state.isSimulating) {
+  if (!state.isSimulating && !state.isCompleted) {
     store.dispatch(deliveryActions.startDelivery());
+    hasNotifiedCompletion = false;
   }
 
   // Clear any existing interval
@@ -18,42 +21,59 @@ export const startDeliverySimulation = () => {
     clearInterval(simulationInterval);
   }
 
-  // Update progress every second based on elapsed time
-  simulationInterval = setInterval(() => {
-    const currentState = store.getState().delivery;
-    if (currentState.isSimulating) {
-      store.dispatch(deliveryActions.updateProgress());
-    } else {
-      // Stop interval when delivery is complete
-      stopDeliverySimulation();
-    }
-  }, 1000);
+  // Start the interval
+  startInterval();
 
-  // Listen to app state changes to restart interval when app comes to foreground
+  // Listen to app state changes
   if (!appStateSubscription) {
     appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
   }
 
-  console.log('✅ Delivery simulation started');
+  console.log('Delivery simulation started');
+};
+
+const startInterval = () => {
+  simulationInterval = setInterval(() => {
+    const currentState = store.getState().delivery;
+    if (currentState.isSimulating) {
+      store.dispatch(deliveryActions.updateProgress());
+      
+      if (currentState.progress >= 0.99 && !hasNotifiedCompletion) {
+        hasNotifiedCompletion = true;
+        sendDeliveryCompletionNotification();
+      }
+    } else if (currentState.isCompleted && !hasNotifiedCompletion) {
+      hasNotifiedCompletion = true;
+      sendDeliveryCompletionNotification();
+    } else {
+      stopDeliverySimulation();
+    }
+  }, 1000);
+};
+
+const sendDeliveryCompletionNotification = () => {
+  try {
+    BackgroundGeolocation.ready({
+      notification: {
+        title: '🎉 Delivery Complete!',
+        text: 'Your package has arrived at the destination.',
+      },
+    } as any);
+  } catch (error) {
+    console.log('Could not update notification:', error);
+  }
+  
+  console.log('📱 Delivery completion notification sent');
 };
 
 const handleAppStateChange = (nextAppState: AppStateStatus) => {
   const state = store.getState().delivery;
   
   if (nextAppState === 'active' && state.isSimulating) {
-    // App came to foreground, update progress immediately
     store.dispatch(deliveryActions.updateProgress());
     
-    // Restart interval if it was stopped
     if (!simulationInterval) {
-      simulationInterval = setInterval(() => {
-        const currentState = store.getState().delivery;
-        if (currentState.isSimulating) {
-          store.dispatch(deliveryActions.updateProgress());
-        } else {
-          stopDeliverySimulation();
-        }
-      }, 1000);
+      startInterval();
     }
   }
 };
@@ -70,11 +90,30 @@ export const stopDeliverySimulation = () => {
   }
   
   store.dispatch(deliveryActions.stopDelivery());
-  console.log('Delivery simulation stopped');
 };
 
 export const resetDeliverySimulation = () => {
-  stopDeliverySimulation();
+  hasNotifiedCompletion = false;
+  
+  // Stop current interval
+  if (simulationInterval) {
+    clearInterval(simulationInterval);
+    simulationInterval = null;
+  }
+  
+  // Reset the delivery state
   store.dispatch(deliveryActions.resetDelivery());
-  console.log('Delivery simulation reset');
+  
+  // Immediately start a new delivery
+  store.dispatch(deliveryActions.startDelivery());
+  
+  // Restart the interval
+  startInterval();
+  
+  // Re-add app state listener if needed
+  if (!appStateSubscription) {
+    appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
+  }
+  
+  console.log('Delivery simulation reset and restarted');
 };

@@ -3,8 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface DeliveryState {
   progress: number;
   isSimulating: boolean;
-  startTime: number | null; // Timestamp when delivery started
-  estimatedDuration: number; // Duration in milliseconds
+  isCompleted: boolean;
+  startTime: number | null;
+  estimatedDuration: number;
   startLocation: {
     latitude: number;
     longitude: number;
@@ -22,8 +23,9 @@ interface DeliveryState {
 const initialState: DeliveryState = {
   progress: 0,
   isSimulating: false,
+  isCompleted: false,
   startTime: null,
-  estimatedDuration: 100000, // 100 seconds for demo
+  estimatedDuration: 100000, // 100 seconds
   startLocation: {
     latitude: 27.7172,
     longitude: 85.3240,
@@ -45,6 +47,7 @@ export const deliverySlice = createSlice({
     startDelivery: (state) => {
       if (!state.isSimulating) {
         state.isSimulating = true;
+        state.isCompleted = false;
         state.startTime = Date.now();
         state.progress = 0;
         state.currentLocation = state.startLocation;
@@ -58,16 +61,15 @@ export const deliverySlice = createSlice({
       
       state.progress = newProgress;
       
-      // Calculate current position based on progress
       const { startLocation, endLocation } = state;
       state.currentLocation = {
         latitude: startLocation.latitude + (endLocation.latitude - startLocation.latitude) * newProgress,
         longitude: startLocation.longitude + (endLocation.longitude - startLocation.longitude) * newProgress,
       };
 
-      // Stop simulation when complete
       if (newProgress >= 1) {
         state.isSimulating = false;
+        state.isCompleted = true;
       }
     },
     stopDelivery: (state) => {
@@ -76,6 +78,7 @@ export const deliverySlice = createSlice({
     resetDelivery: (state) => {
       state.progress = 0;
       state.isSimulating = false;
+      state.isCompleted = false;
       state.startTime = null;
       state.currentLocation = state.startLocation;
     },
