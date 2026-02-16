@@ -1392,7 +1392,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.25.0":
+"@babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.26.0":
   version: 7.28.6
   resolution: "@babel/runtime@npm:7.28.6"
   checksum: 10c0/358cf2429992ac1c466df1a21c1601d595c46930a13c1d4662fde908d44ee78ec3c183aaff513ecb01ef8c55c3624afe0309eeeb34715672dbfadb7feedb2c0d
@@ -2106,6 +2106,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/netinfo@npm:^11.5.2":
+  version: 11.5.2
+  resolution: "@react-native-community/netinfo@npm:11.5.2"
+  peerDependencies:
+    react: "*"
+    react-native: ">=0.59"
+  checksum: 10c0/d5301d7d8b363753b6980f5d17dc47ad4933fc46e4010aceb937c0f673b35a6648f259df930b2b48d99344a90ff7a187344486100c4874462d88545f1647bef5
+  languageName: node
+  linkType: hard
+
+"@react-native-masked-view/masked-view@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@react-native-masked-view/masked-view@npm:0.3.2"
+  peerDependencies:
+    react: ">=16"
+    react-native: ">=0.57"
+  checksum: 10c0/4ec84b7af2ded49dc21f17cc723a0ef341076cbe40cf758dd2daff8734bea63ba83e2fee7e63958984385314b8915b6804135997e07697abdd4141217c847fe9
+  languageName: node
+  linkType: hard
+
 "@react-native-vector-icons/common@npm:^12.3.0":
   version: 12.4.0
   resolution: "@react-native-vector-icons/common@npm:12.4.0"
@@ -2573,6 +2593,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@transistorsoft/background-geolocation-types@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "@transistorsoft/background-geolocation-types@npm:5.0.1"
+  checksum: 10c0/54c1aec1b54ac6b213dfb419ed05f3353b5aeaac4d8503423575a6a8f5436d19fc229ecd18913f9fdecd968f59685f59be1e72edd0ecb4aacdcea1bb1b081458
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.1.14":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -2611,6 +2638,13 @@ __metadata:
   dependencies:
     "@babel/types": "npm:^7.28.2"
   checksum: 10c0/b52d7d4e8fc6a9018fe7361c4062c1c190f5778cf2466817cb9ed19d69fbbb54f9a85ffedeb748ed8062d2cf7d4cc088ee739848f47c57740de1c48cbf0d0994
+  languageName: node
+  linkType: hard
+
+"@types/geojson@npm:^7946.0.13":
+  version: 7946.0.16
+  resolution: "@types/geojson@npm:7946.0.16"
+  checksum: 10c0/1ff24a288bd5860b766b073ead337d31d73bdc715e5b50a2cee5cb0af57a1ed02cc04ef295f5fa68dc40fe3e4f104dd31282b2b818a5ba3231bc1001ba084e3c
   languageName: node
   linkType: hard
 
@@ -2881,6 +2915,8 @@ __metadata:
     "@react-native-community/cli": "npm:20.1.0"
     "@react-native-community/cli-platform-android": "npm:20.1.0"
     "@react-native-community/cli-platform-ios": "npm:20.1.0"
+    "@react-native-community/netinfo": "npm:^11.5.2"
+    "@react-native-masked-view/masked-view": "npm:^0.3.2"
     "@react-native-vector-icons/ionicons": "npm:^12.3.0"
     "@react-native/babel-preset": "npm:0.84.0"
     "@react-native/eslint-config": "npm:0.84.0"
@@ -2900,12 +2936,21 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.2.3"
     react-native: "npm:0.84.0"
+    react-native-background-geolocation: "npm:^5.0.3"
+    react-native-config: "npm:^1.6.1"
+    react-native-linear-gradient: "npm:^2.8.3"
+    react-native-maps: "npm:^1.27.1"
     react-native-mmkv: "npm:^4.1.2"
     react-native-nitro-modules: "npm:^0.33.9"
-    react-native-safe-area-context: "npm:^5.5.2"
+    react-native-permissions: "npm:^5.4.4"
+    react-native-safe-area-context: "npm:^5.6.2"
+    react-native-screens: "npm:^4.23.0"
+    react-native-skeleton-placeholder: "npm:^5.2.4"
     react-redux: "npm:^9.2.0"
     react-test-renderer: "npm:19.2.3"
+    redux-persist: "npm:^6.0.0"
     typescript: "npm:^5.8.3"
+    zod: "npm:^4.3.6"
   languageName: unknown
   linkType: soft
 
@@ -7686,6 +7731,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-freeze@npm:^1.0.0":
+  version: 1.0.4
+  resolution: "react-freeze@npm:1.0.4"
+  peerDependencies:
+    react: ">=17.0.0"
+  checksum: 10c0/8f51257c261bfefff86f618e958683536248f708019632d309ee5ebdd52f25d3c130660d06fb6f0f4fdef79f00f8ec7177233a872c2321f7d46b7e77ccc522a1
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -7704,6 +7758,57 @@ __metadata:
   version: 19.2.4
   resolution: "react-is@npm:19.2.4"
   checksum: 10c0/477a7cfc900f24194606e315fa353856a3a13487ea8eca841678817cad4daef64339ea0d1e84e58459fc75dbe0d9ba00bb0cc626db3d07e0cf31edc64cb4fa37
+  languageName: node
+  linkType: hard
+
+"react-native-background-geolocation@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "react-native-background-geolocation@npm:5.0.3"
+  dependencies:
+    "@babel/runtime": "npm:^7.26.0"
+    "@transistorsoft/background-geolocation-types": "npm:^5.0.1"
+    tslib: "npm:^2.6.3"
+  checksum: 10c0/ef3d7ce109108a7bdb6fe2cd8bd5662ced3dcb82aee043a2c1556bcf876b037819296478ebd042e1ebaed06430675c2306179db5a5ff182517953f8365b26812
+  languageName: node
+  linkType: hard
+
+"react-native-config@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "react-native-config@npm:1.6.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-windows: ">=0.61"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 10c0/9e2bbb7fb04bac878471f7b06132d84233c482952fc7dd0b651669a62cd35c35428302c7502a92898402505ec9b8d7997848122356b42de5c072dcce549d5813
+  languageName: node
+  linkType: hard
+
+"react-native-linear-gradient@npm:^2.8.3":
+  version: 2.8.3
+  resolution: "react-native-linear-gradient@npm:2.8.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/cd41bf28e9f468173f1e5e768685128ebf8bbf9077710e43b63482c1a76f37bff8ab3d1d6adfd7b4d54e648672356c02bea46c47cdbdb1844ebe5c5caf720114
+  languageName: node
+  linkType: hard
+
+"react-native-maps@npm:^1.27.1":
+  version: 1.27.1
+  resolution: "react-native-maps@npm:1.27.1"
+  dependencies:
+    "@types/geojson": "npm:^7946.0.13"
+  peerDependencies:
+    react: ">= 18.3.1"
+    react-native: ">= 0.76.0"
+    react-native-web: ">= 0.11"
+  peerDependenciesMeta:
+    react-native-web:
+      optional: true
+  checksum: 10c0/7b78a8d28ed33afd3be2b6d8216cd4ad88b6e38b777fe8662cca0c12e8498d8b4d9d2694e1de317eb8fcad8f644b42c0abad0218fe18b372182efb4796864f13
   languageName: node
   linkType: hard
 
@@ -7728,13 +7833,52 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:^5.5.2":
+"react-native-permissions@npm:^5.4.4":
+  version: 5.4.4
+  resolution: "react-native-permissions@npm:5.4.4"
+  peerDependencies:
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+    react-native-windows: ">=0.70.0"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 10c0/9a4fa223053db242a66c18303a525e7552e849876e927427485b0e799f46131ccbbd1ad85e6dfac146d12af942a77a95caa8649b9f4ebcfbb7f2ff6dd8fece04
+  languageName: node
+  linkType: hard
+
+"react-native-safe-area-context@npm:^5.6.2":
   version: 5.6.2
   resolution: "react-native-safe-area-context@npm:5.6.2"
   peerDependencies:
     react: "*"
     react-native: "*"
   checksum: 10c0/3c8df21a1dbac83116b9c9bd5d20b7c1bb7649ecef44a111af6fb6b237241f5f4d692189eec30a69f5701b857249257da3621b9e17165460a2bb71faac7b92ae
+  languageName: node
+  linkType: hard
+
+"react-native-screens@npm:^4.23.0":
+  version: 4.23.0
+  resolution: "react-native-screens@npm:4.23.0"
+  dependencies:
+    react-freeze: "npm:^1.0.0"
+    warn-once: "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/91c0c9840d36923adc49cb0d463f4e6b63d63060245029d49f8b80d82a405fcecce2196695c993f214c5ecb945e1b0bfb8ec0b8b44845b1438b8fac0d9ed53a7
+  languageName: node
+  linkType: hard
+
+"react-native-skeleton-placeholder@npm:^5.2.4":
+  version: 5.2.4
+  resolution: "react-native-skeleton-placeholder@npm:5.2.4"
+  peerDependencies:
+    "@react-native-masked-view/masked-view": ^0.2.8
+    react: ">=0.14.8"
+    react-native: ">=0.50.1"
+    react-native-linear-gradient: ^2.5.6
+  checksum: 10c0/9b9e7066d968da98f19bd85eea8d87592a7ef12066cd9d1e4942a4b24af37ba453181012c7e3c2a222f656e0c7b90e6bfbd1ca636df2407cecbb333e56c59f0c
   languageName: node
   linkType: hard
 
@@ -7842,6 +7986,15 @@ __metadata:
     string_decoder: "npm:^1.1.1"
     util-deprecate: "npm:^1.0.1"
   checksum: 10c0/e37be5c79c376fdd088a45fa31ea2e423e5d48854be7a22a58869b4e84d25047b193f6acb54f1012331e1bcd667ffb569c01b99d36b0bd59658fb33f513511b7
+  languageName: node
+  linkType: hard
+
+"redux-persist@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "redux-persist@npm:6.0.0"
+  peerDependencies:
+    redux: ">4.0.0"
+  checksum: 10c0/8242d265ab8d28bbc95cf2dc2a05b869eb67aa309b1ed08163c926f3af56dd8eb1ea62118286083461b8ef2024d3b349fd264e5a62a70eb2e74d068c832d5bf2
   languageName: node
   linkType: hard
 
@@ -8788,6 +8941,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.6.3":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
 "type-check@npm:^0.4.0, type-check@npm:~0.4.0":
   version: 0.4.0
   resolution: "type-check@npm:0.4.0"
@@ -9086,7 +9246,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"warn-once@npm:^0.1.1":
+"warn-once@npm:^0.1.0, warn-once@npm:^0.1.1":
   version: 0.1.1
   resolution: "warn-once@npm:0.1.1"
   checksum: 10c0/f531e7b2382124f51e6d8f97b8c865246db8ab6ff4e53257a2d274e0f02b97d7201eb35db481843dc155815e154ad7afb53b01c4d4db15fb5aa073562496aff7
@@ -9394,7 +9554,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.25.0 || ^4.0.0":
+"zod@npm:^3.25.0 || ^4.0.0, zod@npm:^4.3.6":
   version: 4.3.6
   resolution: "zod@npm:4.3.6"
   checksum: 10c0/860d25a81ab41d33aa25f8d0d07b091a04acb426e605f396227a796e9e800c44723ed96d0f53a512b57be3d1520f45bf69c0cb3b378a232a00787a2609625307
