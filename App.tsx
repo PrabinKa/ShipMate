@@ -7,14 +7,24 @@ import { Provider } from 'react-redux';
 import { store } from './src/store/store';
 import { useEffect } from 'react';
 import { startDeliverySimulation } from './src/utils/delivery/deliverySimulation';
+import { requestStartupPermissions } from './src/utils/permission/permission';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   useEffect(() => {
-    // Start delivery simulation when app launches
-    // It will check if already running and continue from where it left off
-    startDeliverySimulation();
+    const initApp = async () => {
+      try {
+         await requestStartupPermissions();
+      } catch (error) {
+        console.error('Error requesting permissions:', error);
+      }
+
+      // Start delivery simulation after permissions are requested
+      startDeliverySimulation();
+    };
+
+    initApp();
   }, []);
 
   return (

@@ -10,8 +10,18 @@ let hasNotifiedCompletion = false;
 export const startDeliverySimulation = () => {
   const state = store.getState().delivery;
   
+  // Reset and start delivery if it's completed from a previous session
+  if (state.isCompleted) {
+    store.dispatch(deliveryActions.resetDelivery());
+    hasNotifiedCompletion = false;
+  }
+  
   // Start delivery if not already started
   if (!state.isSimulating && !state.isCompleted) {
+    store.dispatch(deliveryActions.startDelivery());
+    hasNotifiedCompletion = false;
+  } else if (state.isCompleted) {
+    // If it was completed, start fresh after reset
     store.dispatch(deliveryActions.startDelivery());
     hasNotifiedCompletion = false;
   }
@@ -55,7 +65,7 @@ const sendDeliveryCompletionNotification = () => {
   try {
     BackgroundGeolocation.ready({
       notification: {
-        title: '🎉 Delivery Complete!',
+        title: 'Delivery Complete!',
         text: 'Your package has arrived at the destination.',
       },
     } as any);
@@ -63,7 +73,6 @@ const sendDeliveryCompletionNotification = () => {
     console.log('Could not update notification:', error);
   }
   
-  console.log('📱 Delivery completion notification sent');
 };
 
 const handleAppStateChange = (nextAppState: AppStateStatus) => {
@@ -95,13 +104,11 @@ export const stopDeliverySimulation = () => {
 export const resetDeliverySimulation = () => {
   hasNotifiedCompletion = false;
   
-  // Stop current interval
   if (simulationInterval) {
     clearInterval(simulationInterval);
     simulationInterval = null;
   }
   
-  // Reset the delivery state
   store.dispatch(deliveryActions.resetDelivery());
   
   // Immediately start a new delivery
@@ -114,6 +121,4 @@ export const resetDeliverySimulation = () => {
   if (!appStateSubscription) {
     appStateSubscription = AppState.addEventListener('change', handleAppStateChange);
   }
-  
-  console.log('Delivery simulation reset and restarted');
 };

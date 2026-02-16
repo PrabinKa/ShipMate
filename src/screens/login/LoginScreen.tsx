@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import { colors } from '../../theme/colors';
 import { rSpacing } from '../../utils/responsive/layout';
@@ -23,81 +23,88 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{
+    username?: string;
+    password?: string;
+  }>({});
 
-  const [login, {isLoading, error}] = useLoginMutation();
+  const [login, { isLoading, error }] = useLoginMutation();
 
-const errorMessage =
-  error && 'data' in error
-    ? (error.data as { message?: string })?.message
-    : undefined;
+  const errorMessage =
+    error && 'data' in error
+      ? (error.data as { message?: string })?.message
+      : undefined;
 
-  const handleLogin = async () => { 
+  const handleLogin = async () => {
     try {
       await login({ username, password }).unwrap();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   return (
-    <SafeAreaView
-      style={styles.container}
-    >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-              <KeyboardAvoidingView style={{ flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.headerContainer}>
-          <Text style={styles.subtitle}>Welcome back!</Text>
-          <Text style={styles.description}>Please sign in to continue</Text>
-        </View>
+    <SafeAreaView style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView style={{ flex: 1 }}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.headerContainer}>
+              <Text style={styles.subtitle}>Welcome back!</Text>
+              <Text style={styles.description}>Please sign in to continue</Text>
+            </View>
 
-        <View style={styles.formContainer}>
-          <InputField
-            label="Username"
-            placeholder="Enter your username"
-            value={username}
-            onChangeText={(text: string) => {
-              setUsername(text);
-              if (errors.username) {
-                setErrors(prev => ({ ...prev, username: undefined }));
-              }
-            }}
-            error={errors.username}
-            autoCapitalize="none"
-            autoCorrect={false}
-            returnKeyType="next"
-          />
+            <View style={styles.formContainer}>
+              <InputField
+                label="Username"
+                placeholder="Enter your username"
+                value={username}
+                onChangeText={(text: string) => {
+                  setUsername(text);
+                  if (errors.username) {
+                    setErrors(prev => ({ ...prev, username: undefined }));
+                  }
+                }}
+                error={errors.username}
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="next"
+              />
 
-          <InputField
-            label="Password"
-            placeholder="Enter your password"
-            value={password}
-            onChangeText={(text: string) => {
-              setPassword(text);
-              if (errors.password) {
-                setErrors(prev => ({ ...prev, password: undefined }));
-              }
-            }}
-            error={errors.password}
-            secureTextEntry={!showPassword}
-            showPasswordToggle={true}
-            onTogglePassword={() => setShowPassword(!showPassword)}
-            autoCapitalize="none"
-            autoCorrect={false}
-            returnKeyType="done"
-          />
+              <InputField
+                label="Password"
+                placeholder="Enter your password"
+                value={password}
+                onChangeText={(text: string) => {
+                  setPassword(text);
+                  if (errors.password) {
+                    setErrors(prev => ({ ...prev, password: undefined }));
+                  }
+                }}
+                error={errors.password}
+                secureTextEntry={!showPassword}
+                showPasswordToggle={true}
+                onTogglePassword={() => setShowPassword(!showPassword)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="done"
+              />
 
-          {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+              {errorMessage && (
+                <Text style={styles.errorText}>{errorMessage}</Text>
+              )}
 
-          <TextButton label='Signin' isLoading={isLoading} onPress={handleLogin} />
-        </View>
-      </ScrollView>
-      </KeyboardAvoidingView>
+              <TextButton
+                label="Signin"
+                isLoading={isLoading}
+                onPress={handleLogin}
+              />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
@@ -155,12 +162,12 @@ const styles = StyleSheet.create({
     color: colors.blueDark,
     fontWeight: '700',
   },
-    errorText: {
-      fontSize: getFontSize(12),
-      fontWeight: '500',
-      color: colors.error,
-      marginBottom: rSpacing(4)
-    },
+  errorText: {
+    fontSize: getFontSize(12),
+    fontWeight: '500',
+    color: colors.error,
+    marginBottom: rSpacing(4),
+  },
 });
 
 export default LoginScreen;

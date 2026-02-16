@@ -98,7 +98,6 @@ const NewShipment: React.FC<NewShipmentProps> = ({ navigation }) => {
       isSynced: false,
     });
 
-    // Immediately go back (UI is instant)
     navigation.goBack();
 
     // Background sync if online
@@ -109,7 +108,6 @@ const NewShipment: React.FC<NewShipmentProps> = ({ navigation }) => {
         offlineStorage.markAsSynced(localOrder.id, response.id);
       } catch {
         // Silent failure - order is already saved locally and will sync later
-        // Do not log error details to console in production
       }
     }
   };

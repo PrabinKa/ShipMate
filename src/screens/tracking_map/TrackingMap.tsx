@@ -5,24 +5,25 @@ import MapView, {
   AnimatedRegion,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
+import { useSelector } from 'react-redux';
 import { startBackgroundTracking } from '../../utils/tracking/trackingService';
 import { resetDeliverySimulation } from '../../utils/delivery/deliverySimulation';
-import { store } from '../../store/store';
+import { RootState } from '../../store/store';
+import { getFontSize, rSpacing } from '../../utils';
+import { colors } from '../../theme/colors';
 
 const { width, height } = Dimensions.get('window');
 
 const TrackingScreen = () => {
   const markerRef = useRef<any>(null);
-  const [isCompleted, setIsCompleted] = useState(false);
-
-  const deliveryState = store.getState().delivery;
-  const start = deliveryState.startLocation;
-  const end = deliveryState.endLocation;
+  
+  const delivery = useSelector((state: RootState) => state.delivery);
+  const { startLocation, endLocation, currentLocation, isCompleted } = delivery;
 
   const [coordinate] = useState(
     new AnimatedRegion({
-      latitude: deliveryState.currentLocation.latitude,
-      longitude: deliveryState.currentLocation.longitude,
+      latitude: startLocation.latitude,
+      longitude: startLocation.longitude,
       latitudeDelta: 0.01,
       longitudeDelta: 0.01,
     })
@@ -32,25 +33,18 @@ const TrackingScreen = () => {
     startBackgroundTracking();
   }, []);
 
+  // Update marker position when currentLocation changes
   useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      const delivery = store.getState().delivery;
-      
-      // Update completion state
-      setIsCompleted(delivery.isCompleted);
-      
-      if (markerRef.current) {
-        coordinate.timing({
-          latitude: delivery.currentLocation.latitude,
-          longitude: delivery.currentLocation.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-          duration: 1000,
-        } as any).start();
-      }
-    });
-    return () => unsubscribe();
-  }, [coordinate]);
+    if (markerRef.current && currentLocation) {
+      coordinate.timing({
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+        duration: 500,
+      } as any).start();
+    }
+  }, [currentLocation, coordinate]);
 
   const handleRestartDelivery = () => {
     resetDeliverySimulation();
@@ -62,21 +56,21 @@ const TrackingScreen = () => {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: start.latitude,
-          longitude: start.longitude,
+          latitude: startLocation.latitude,
+          longitude: startLocation.longitude,
           latitudeDelta: 0.05,
           longitudeDelta: 0.05,
         }}
       >
         <Marker
-          coordinate={start}
+          coordinate={startLocation}
           title="Pickup Location"
           description="Kathmandu Durbar Square"
           pinColor="green"
         />
 
         <Marker
-          coordinate={end}
+          coordinate={endLocation}
           title="Delivery Location"
           description="Patan"
           pinColor="red"
@@ -91,7 +85,7 @@ const TrackingScreen = () => {
 
       {isCompleted && (
         <View style={styles.completedContainer}>
-          <Text style={styles.completedText}>🎉 Delivery Complete!</Text>
+          <Text style={styles.completedText}>Delivery Completed!</Text>
           <TouchableOpacity 
             style={styles.restartButton}
             onPress={handleRestartDelivery}
@@ -114,12 +108,12 @@ const styles = StyleSheet.create({
   },
   completedContainer: {
     position: 'absolute',
-    bottom: 50,
-    left: 20,
-    right: 20,
-    backgroundColor: '#4CAF50',
+    bottom: rSpacing(50),
+    left: rSpacing(20),
+    right: rSpacing(20),
+    backgroundColor: colors.blueLight,
     borderRadius: 12,
-    padding: 20,
+    padding: rSpacing(20),
     alignItems: 'center',
     elevation: 5,
     shadowColor: '#000',
@@ -128,20 +122,20 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   completedText: {
-    color: 'white',
-    fontSize: 18,
+    color: colors.blueDark,
+    fontSize: getFontSize(18),
     fontWeight: 'bold',
-    marginBottom: 15,
+    marginBottom: rSpacing(15),
   },
   restartButton: {
-    backgroundColor: 'white',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    backgroundColor: colors.primary,
+    paddingHorizontal: rSpacing(24),
+    paddingVertical: rSpacing(12),
     borderRadius: 8,
   },
   restartButtonText: {
-    color: '#4CAF50',
-    fontSize: 16,
+    color: colors.blueDark,
+    fontSize: getFontSize(14),
     fontWeight: '600',
   },
 });

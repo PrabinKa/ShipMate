@@ -14,16 +14,21 @@ const startBackgroundTracking = async () => {
     return;
   }
 
+  // Check location permission status without requesting
   const hasLocationPermission = await checkPermissions(PERMISSION_TYPE.location);
-  if (!hasLocationPermission) return;
+  if (!hasLocationPermission) {
+    return;
+  }
 
+  // Check background location permission status
   const hasBackgroundPermission = await checkPermissions(PERMISSION_TYPE.background_location);
-  if (!hasBackgroundPermission) return;
+  if (!hasBackgroundPermission) {
+    console.log('Background location permission not granted, continuing anyway');
+  }
 
   try {
-    // Step 2: Configure plugin (Promise-based)
     const state = await BackgroundGeolocation.ready({
-      desiredAccuracy: 0, // HIGH accuracy
+      desiredAccuracy: 0,
       distanceFilter: 50,
       stopOnTerminate: false,
       startOnBoot: true,
@@ -42,18 +47,16 @@ const startBackgroundTracking = async () => {
       logLevel: 5,
     } as any);
 
-    // Step 3: Start tracking if not already started
+    // Start tracking if not already started
     if (!state.enabled) {
       await BackgroundGeolocation.start();
-      console.log('✅ Background tracking started.');
     } else {
-      console.log('✅ Background tracking already running.');
+      console.log('Background tracking already running.');
     }
 
-    // Step 4: Listen for location updates (only register once)
+    // Listen for location updates
     BackgroundGeolocation.onLocation(
       (location) => {
-        console.log('[location]', location);
 
         storage.set('lastLocation', JSON.stringify(location));
 
@@ -62,9 +65,6 @@ const startBackgroundTracking = async () => {
           payload: location,
         });
       },
-      (error) => {
-        console.warn('[location error]', error);
-      }
     );
 
     isTrackingInitialized = true;
@@ -78,7 +78,6 @@ const stopBackgroundTracking = async () => {
     await BackgroundGeolocation.stop();
     BackgroundGeolocation.removeListeners();
     isTrackingInitialized = false;
-    console.log('Background tracking stopped.');
   } catch (error) {
     console.error('Error stopping background tracking:', error);
   }

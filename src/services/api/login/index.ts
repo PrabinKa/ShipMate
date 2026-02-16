@@ -6,6 +6,7 @@ import { api } from '../../api';
 interface LoginRequest {
   username: string;
   password: string;
+  expiresInMins?: number;
 }
 
 interface LoginResponse {

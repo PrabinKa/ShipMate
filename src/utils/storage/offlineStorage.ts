@@ -1,7 +1,6 @@
 import { createMMKV } from 'react-native-mmkv';
 
-// Generate encryption key from app identifier (use device-specific secure storage in production)
-const ENCRYPTION_KEY = 'shipmate_secure_key_2024';
+const ENCRYPTION_KEY = 'shipmate_secure_key';
 
 export const storage = createMMKV({
   id: 'shipmate-offline-storage',

@@ -5,7 +5,6 @@ import { OrdersResponse } from "./schema";
 export const orderList = api.injectEndpoints({
   endpoints: builder => ({
 
-    // ✅ GET Orders
     getOrderList: builder.query<OrdersResponse, void>({
       query: () => ({
         method: 'GET',
@@ -24,7 +23,6 @@ export const orderList = api.injectEndpoints({
       },
     }),
 
-    // ✅ CREATE Order (POST)
     createOrder: builder.mutation<any, any>({
       query: body => ({
         method: 'POST',

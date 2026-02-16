@@ -25,7 +25,7 @@ const initialState: DeliveryState = {
   isSimulating: false,
   isCompleted: false,
   startTime: null,
-  estimatedDuration: 100000, // 100 seconds
+  estimatedDuration: 100000,
   startLocation: {
     latitude: 27.7172,
     longitude: 85.3240,

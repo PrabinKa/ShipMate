@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  Alert,
   FlatList,
   RefreshControl,
   StyleSheet,
@@ -9,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getFontSize, rSpacing, useNetworkStatus } from '../../utils';
+import { getFontSize, rHeight, rSpacing, rWidth, useNetworkStatus } from '../../utils';
 import { colors } from '../../theme/colors';
 import {
   useCreateOrderMutation,
@@ -34,7 +33,6 @@ const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation }) => {
 
   const isOnline = useNetworkStatus();
   const [isSyncing, setIsSyncing] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0); // Force re-render
 
   const [orders, setOrders] = useState<PendingOrder[]>([]);
 
@@ -201,8 +199,8 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
   },
   fabButton: {
-    width: 56,
-    height: 56,
+    width: rHeight(56),
+    height: rWidth(56),
     borderRadius: 14,
     backgroundColor: colors.blueDark,
     justifyContent: 'center',

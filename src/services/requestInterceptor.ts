@@ -1,5 +1,3 @@
-// services/requestInterceptor.ts
-
 import {BaseQueryFn, FetchArgs} from '@reduxjs/toolkit/query';
 import { rawBaseQuery } from './apiclient';
 
