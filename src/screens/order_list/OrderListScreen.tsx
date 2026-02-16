@@ -142,7 +142,7 @@ const OrderListScreen: React.FC<OrderListScreenProps> = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={{ flex: 1, backgroundColor: colors.grayLight }}>
-        {isLoading ? (
+        {isLoading || isFetching ? (
           <View
             style={{ marginTop: rSpacing(20), paddingHorizontal: rSpacing(20) }}
           >
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    paddingVertical: rSpacing(15),
+    paddingBottom: rSpacing(15),
   },
   headerTextStyle: {
     fontSize: getFontSize(20),

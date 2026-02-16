@@ -104,12 +104,6 @@ const makePhoneCall = async (phoneNumber?: string) => {
     const cleanNumber = phoneNumber.replaceAll(/\D/g, '');
     const url = `tel:${cleanNumber}`;
 
-    const supported = await Linking.canOpenURL(url);
-    if (!supported) {
-      Alert.alert('Error', 'Phone call is not supported on this device.');
-      return;
-    }
-
     await Linking.openURL(url);
   } catch (error) {
     console.error('Failed to make phone call:', error);
