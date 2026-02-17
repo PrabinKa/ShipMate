@@ -20,7 +20,6 @@ Mini delivery application demonstrating offline-first architecture, background l
 - username: emilys
 - password: emilyspass
 
-
 ## Libraries Used
 
 - react-native-background-geolocation:geolocation	Background & foreground location tracking
