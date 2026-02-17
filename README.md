@@ -15,6 +15,10 @@ Mini delivery application demonstrating offline-first architecture, background l
 - yarn android
 - yarn ios
 
+## Login Credentials
+
+- username: emilys
+- password: emilyspass
 
 ## Libraries Used
 
